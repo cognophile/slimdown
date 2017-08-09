@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<H1>Slimdown</H1>
+			<p>A HTML to <b>Markdown</b> conversion utility, <strike>written</strike> programmed in Python. This document can be used as the example HTML document to feed Slimdown as to show supported tags.</p>
+
+			<p>This tool is intended for use on simple HTML documents, such as <em>basic HTML</em> wiki pages. This is what it was created for. I hope to expand its functionality in time.</p>
+			<p>It does have some quirks which I hope to address in time, but for now, it was suitable for the use case I had.</p>
+
+		<hr>
+
+		<h2>How it works</h2>
+			<p>Long story short - <i>black magic</i>.</p>
+
+		<h2>Got a problem?</h2>
+			<h3>Issue Submission</h3>
+				<p>Please see the Github page for this project: <a href="https://github.com/cognophile/slimdown">Slimdown @ Github</a></p>
+
+				<p>It will also detail the aformentioned quirks, so do check these.</p>
+
+		<h2>Feature Set:</h2>
+		<ul>
+			<li>Headings: 1-6</li>
+			<li>Inline styles: b, strong, i, em, strike, code</li>
+			<li>List items (like us!)</li>
+			<li>Breaks</li>
+			<li>Partial Support: External Links, Nesting List Items</li>
+		</ul>
+
+		<br>
+		<h2>How to use it</h2>
+		<code>./slimdown -f README.html</code>
+		
+		<pre>
+		./slimdown -f README.html
+		</pre>
+
+		<h3>Running Unit Tests</h3>
+			<code>python3 -m unittest -v</code>
+	</body>
+</html>
