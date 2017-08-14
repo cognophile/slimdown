@@ -6,10 +6,10 @@ from helpers.filehelper import FileHelper
 from services.htmltomd import HtmlToMarkdown
 
 class Slimdown():
-    markdownOutput = []
+    __markdownOutput = []
 
     def __setMarkdownOutput(self, data):
-        self.markdownOutput = data
+        self.__markdownOutput = data
 
     def parse(self, htmlFile):
         htmlToMdParser = HtmlToMarkdown()
@@ -18,7 +18,7 @@ class Slimdown():
     
     def __writeToFile(self, mdFile):
         with open(mdFile, 'a') as writer:
-            for line in self.markdownOutput: 
+            for line in self.__markdownOutput: 
                 writer.write(line)
 
     def outputMarkdown(self, htmlFile):
