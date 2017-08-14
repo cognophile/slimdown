@@ -1,17 +1,18 @@
 from html.parser import HTMLParser
 
 class HtmlToMarkdown(HTMLParser):
-    generatedMarkdown = []
-    supportedInline = ['b', 'strong', 'i', 'em', 'strike', 'code', 'pre']
-    reverseTags = ['em']
+    __generatedMarkdown = []
+    __supportedInline = ['b', 'strong', 'i', 'em', 'strike', 'code', 'pre']
+    __blacklistedTags = ['script', 'iframe']
+    __reverseTags = ['em']
     
     # Here be dragons: 
     # Flag used due to procedural nature of HTMLParser which continues
     # to call all handle_* methods within .feed() and would add newlines as Data
     # for any tags not supported by Slimdown yet. 
-    continueToProcessFlag = True
+    __continueToProcessFlag = True
     
-    htmlMarkdownBindings = {
+    __htmlMarkdownBindings = {
                                 'h1':'# ', 'h2':'## ', 'h3':'### ','h4':'#### ','h5':'##### ',
                                 'h6':'###### ', 'p':'', 'li':'- ', 'a':'[]', 'b':'**', 'strong':'**',
                                 'i':'_', 'em':'**_', 'strike':'~~', 'code':'`', 'pre':'```', 'br':'\n',
@@ -33,32 +34,35 @@ class HtmlToMarkdown(HTMLParser):
         return [val for val in listToRemoveFrom if itemToRemove not in val]
 
     def getMarkdown(self):
-        md = self.__removeFromOutput(self.generatedMarkdown, '\t')
+        md = self.__removeFromOutput(self.__generatedMarkdown, '\t')
         return md
 
     def __setContinueToProcessFlag(self, val):
-        self.continueToProcessFlag = val
+        self.__continueToProcessFlag = val
     
     def __getContinueToProcessFlag(self):
-        return self.continueToProcessFlag
+        return self.__continueToProcessFlag
 
 
     # Overriden HTMLParser methods
     def handle_starttag(self, tag, attrs):
         openTag = tag.lower()
-        if openTag in self.htmlMarkdownBindings:
-            md = self.htmlMarkdownBindings.get(openTag)
-            self.generatedMarkdown.append(md)
+        if openTag in self.__blacklistedTags:
+            self.__setContinueToProcessFlag(False)
+            return 
+        elif openTag in self.__htmlMarkdownBindings:
+            md = self.__htmlMarkdownBindings.get(openTag)
+            self.__generatedMarkdown.append(md)
             
             if openTag == 'a':
                 url = dict(attrs).get('href')
-                self.generatedMarkdown.append('({0})'.format(url))            
+                self.__generatedMarkdown.append('({0})'.format(url))            
         else: 
             self.__setContinueToProcessFlag(False)
-
+        
     def handle_data(self, data):
         if self.__getContinueToProcessFlag() == True:
-            self.generatedMarkdown.append(data)
+            self.__generatedMarkdown.append(data)
         else: 
             self.__setContinueToProcessFlag(True)
 
@@ -66,13 +70,13 @@ class HtmlToMarkdown(HTMLParser):
         closeTag = tag.lower()
         
         if self.__getContinueToProcessFlag() == True: 
-            if closeTag in self.supportedInline:
-                if closeTag in self.htmlMarkdownBindings:
+            if closeTag in self.__supportedInline:
+                if closeTag in self.__htmlMarkdownBindings:
+                    md = self.__htmlMarkdownBindings.get(closeTag)
                     
-                    md = self.htmlMarkdownBindings.get(closeTag)
-                    if closeTag in self.reverseTags:
+                    if closeTag in self.__reverseTags:
                         md = md[::-1]
                     
-                    self.generatedMarkdown.append(md)
+                    self.__generatedMarkdown.append(md)
         else:
             self.__setContinueToProcessFlag(True)
