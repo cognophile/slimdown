@@ -4,12 +4,9 @@
 A HTML to **Markdown** conversion utility, ~~written~~ programmed in Python. This document can be used as the example HTML document to feed Slimdown as to show supported tags.
 
 This tool is intended for use on simple HTML documents, such as **_basic HTML_** wiki pages. This is what it was created for. I hope to expand its functionality in time.
-It does have some quirks which I hope to address in time, but for now, it was suitable for the use case I had.
+It does have some quirks which I hope to address, but for now, it was suitable for my personal use case.
 
 ---
-
-## How it works
-Long story short - _black magic_.
 
 ## Got a problem?
 ### Issue Submission
