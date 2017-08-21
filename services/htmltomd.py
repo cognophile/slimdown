@@ -1,26 +1,25 @@
 from html.parser import HTMLParser
 
 class HtmlToMarkdown(HTMLParser):
-    __generatedMarkdown = []
-    __supportedInline = ['b', 'strong', 'i', 'em', 'strike', 'code', 'pre']
-    __blacklistedTags = ['script', 'iframe']
-    __reverseTags = ['em']
-    
-    # Here be dragons: 
-    # Flag used due to procedural nature of HTMLParser which continues
-    # to call all handle_* methods within .feed() and would add newlines as Data
-    # for any tags not supported by Slimdown yet. 
-    __continueToProcessFlag = True
-    
-    __htmlMarkdownBindings = {
-                                'h1':'# ', 'h2':'## ', 'h3':'### ','h4':'#### ','h5':'##### ',
-                                'h6':'###### ', 'p':'', 'li':'- ', 'a':'[]', 'b':'**', 'strong':'**',
-                                'i':'_', 'em':'**_', 'strike':'~~', 'code':'`', 'pre':'```', 'br':'\n',
-                                'hr':'---'
-                           }
-
     def __init__(self):
         HTMLParser.__init__(self)
+        self.__generatedMarkdown = []
+        self.__supportedInline = ['b', 'strong', 'i', 'em', 'strike', 'code', 'pre']
+        self.__blacklistedTags = ['script', 'iframe']
+        self.__reverseTags = ['em']
+
+        # Here be dragons: 
+        # Flag used due to procedural nature of HTMLParser which continues
+        # to call all handle_* methods within .feed() and would add newlines as Data
+        # for any tags not supported by Slimdown yet. 
+        self.__continueToProcessFlag = True
+
+        self.__htmlMarkdownBindings = {
+            'h1':'# ', 'h2':'## ', 'h3':'### ', 'h4':'#### ', 'h5':'##### ',
+            'h6':'###### ', 'p':'', 'li':'- ', 'a':'[]', 'b':'**', 'strong':'**',
+            'i':'_', 'em':'**_', 'strike':'~~', 'code':'`', 'pre':'```', 'br':'\n',
+            'hr':'---'
+        }
 
     def readFile(self, htmlFile):
         with open(htmlFile, 'r') as html:

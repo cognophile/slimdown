@@ -19,13 +19,15 @@ It will also detail the aformentioned quirks, so do check these.
 - Inline styles: b, strong, i, em, strike, code
 - List items (like us!)
 - Breaks
-- Partial Support: External Links, Nesting List Items
+- Horizontal rules
+- Inline anchor external hyperlinks
+- Partial Support: Nesting List Items; Preformatted text blocks
 
 
 
 
 ## How to use it
-`./slimdown -f README.html`
+`./slimdown-app.py -f README.html`
 ```
 ```
 
